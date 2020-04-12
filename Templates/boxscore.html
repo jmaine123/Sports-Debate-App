@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{date}}</h1>
+<div class="dailygames">
+{% for game in games %}
+  <div class="boxscore">
+    <div class="">
+      <h4>{{game.winner}}</h4>
+    </div>
+    <div >
+      <h5 class="winnerScore">{{game.winnerScore}}</h5>
+    </div>
+    <div class="">
+      <h4>{{game.loser}}</h4>
+    </div>
+    <div >
+      <h5 class="loserScore">{{game.loserScore}}</h5>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Hello player {{player_id}}</h1>
+
+
+<h2><a href="https://www.basketball-reference.com{{player.url}}">{{player.name}}</a></h2>
+<h3>{{player.height}}</h3>
+<h3>{{player.college}}</h3>
+<h3>{{player.position}}</h3>
+<h4>{{player.birthdate}}</h4>
+<img src="https://d2cwpp38twqe55.cloudfront.net/req/201912101/images/players/{{player.player_id}}.jpg" alt="">
+
+
+<h3><a href="{% url 'home' %}">Back To Homepage</a></h3>
+
+
+{% endblock %}

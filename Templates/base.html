@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/style.css' %}">
+  </head>
+  <body>
+    <ul class = "nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/boxscore">Box Score</a></li>
+      <li><a href="/comparison">Comparison</a></li>
+    </ul>
+    {% block content %}
+
+    {% endblock %}
+  </body>
+</html>
