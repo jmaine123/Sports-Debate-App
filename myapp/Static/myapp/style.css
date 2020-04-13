@@ -6,7 +6,7 @@
   font-size: 5vh;
 }
 .nav li{
-  border:2px solid white;
+  border:3px solid white;
   background-color: red;
   background-image: linear-gradient(blue,rgb(52, 19, 158));
   font-weight: 100;
@@ -14,11 +14,15 @@
   display: inline-block;
   width: 20%;
   margin: auto;
+  border-radius: 10px;
+  box-shadow: 0px 1px 4px -2px #333;
+
 }
 
 .nav li a{
   color: white;
   text-decoration: none;
+  text-shadow: 0px -1px #333;
 }
 
 h1{
@@ -155,4 +159,21 @@ ul{
 
 form{
   padding: 10%;
+}
+
+.accolades ul{
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.accolades ul li{
+  border: 3px solid white;
+  width: 100%;
+  background-color: #B22222;
+  color: white;
+  font-style: italic;
+  margin:auto;
+  margin-bottom: 5%;
+  font-size: 2vh;
 }

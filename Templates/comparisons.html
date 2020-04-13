@@ -74,6 +74,24 @@
       </ul>
     </div>
   </div>
+  <div class="accolades">
+    <ul>
+      {% for stat in p2_accolades%}
+        <li><div>{{stat}}:</div></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="empty">
+
+  </div>
+  <div class="accolades">
+    <ul>
+      {% for stat in p1_accolades%}
+        <li><div>{{stat}}:</div></li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
+
 
 {% endblock %}

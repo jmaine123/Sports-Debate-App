@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from myapp.models import Playersinfo
 import datetime
+import re
 import requests
 from bs4 import BeautifulSoup
 from lxml import html
@@ -33,7 +34,7 @@ def dailygames(m,d,y):
 
 def home(request):
     date = datetime.datetime.now()
-    players = Playersinfo.objects.all()[:100]
+    players = Playersinfo.objects.all()[:200]
     return render(request, 'home.html', {'players':players, 'date':date})
 
 def boxscore(request):
@@ -96,14 +97,20 @@ def currentSeasonStats(player):
     p_url = 'https://www.basketball-reference.com' + player.url
     page = requests.get(p_url)
     tree = html.fromstring(page.content)
-    player_obj = {
-        "Points": tree.xpath('//h4[@data-tip="Points"]/parent::div/p[1]/text()')[0],
-        "Rebounds": tree.xpath('//h4[text()="TRB"]/../p[1]/text()')[0],
-        "Assists": tree.xpath('//h4[text()="AST"]/../p[1]/text()')[0],
-        "Field Goal": tree.xpath('//h4[text()="FG%"]/../p[1]/text()')[0],
-        "3pt Field Goal": tree.xpath('//h4[text()="FG3%"]/../p[1]/text()')[0],
-        "Free Throw": tree.xpath('//h4[text()="FT%"]/../p[1]/text()')[0]
-    }
+    birth_date = player.birthdate
+    birth_year = re.search('(?<=, )[\d].+', birth_date)
+    # current_year = int(datetime.now().year)
+    age = 2020 - int(birth_year.group(0))
+    player_obj = {}
+    if age < 41:
+        player_obj = {
+            "Points": tree.xpath('//h4[@data-tip="Points"]/parent::div/p[1]/text()')[0],
+            "Rebounds": tree.xpath('//h4[text()="TRB"]/../p[1]/text()')[0],
+            "Assists": tree.xpath('//h4[text()="AST"]/../p[1]/text()')[0],
+            "Field Goal": tree.xpath('//h4[text()="FG%"]/../p[1]/text()')[0],
+            "3pt Field Goal": tree.xpath('//h4[text()="FG3%"]/../p[1]/text()')[0],
+            "Free Throw": tree.xpath('//h4[text()="FT%"]/../p[1]/text()')[0]
+        }
     return player_obj
 
 def careerStats(player):
@@ -122,6 +129,19 @@ def careerStats(player):
     }
     return player_career
 
+def playerAccolades(player):
+    accolades = []
+    player = get_object_or_404(Playersinfo, name = player)
+    p_url = 'https://www.basketball-reference.com' + player.url
+    page = requests.get(p_url)
+    tree = html.fromstring(page.content)
+    accolades = tree.xpath('//ul[@id="bling"]/li/a/text()')
+    if len(accolades) > 0:
+        return accolades
+    else:
+        return []
+
+
 def comparisons(request, playerone_name, playertwo_name):
     print(playerone_name)
     print(playertwo_name)
@@ -132,7 +152,9 @@ def comparisons(request, playerone_name, playertwo_name):
     p2_current = currentSeasonStats(playertwo_name)
     p1_careerstats = careerStats(playerone_name)
     p2_careerstats = careerStats(playertwo_name)
+    p1_accolades = playerAccolades(playerone_name)
+    p2_accolades = playerAccolades(playertwo_name)
     form = PlayerForm(request.POST, initial={'player': player.name})
     PlayerRequestForm(request)
 
-    return render(request, 'comparisons.html', {'player':player, 'playertwo': player_two, 'p1_current': p1_current, 'p2_current': p2_current, 'p1_careerstats': p1_careerstats, 'p2_careerstats': p2_careerstats,'form': form})
+    return render(request, 'comparisons.html', {'player':player, 'playertwo': player_two, 'p1_current': p1_current, 'p2_current': p2_current, 'p1_careerstats': p1_careerstats, 'p2_careerstats': p2_careerstats, 'p1_accolades': p1_accolades, 'p2_accolades': p2_accolades, 'form': form})
