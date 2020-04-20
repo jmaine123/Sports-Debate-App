@@ -16,7 +16,10 @@
   margin: auto;
   border-radius: 10px;
   box-shadow: 0px 1px 4px -2px #333;
+}
 
+.nav li:hover{
+  background-image: linear-gradient(blue, rgb(22, 124, 181));
 }
 
 .nav li a{
@@ -53,7 +56,6 @@ tbody {
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   border: 1px solid blue;
-
 }
 
 .dailygames{
@@ -92,13 +94,25 @@ tbody {
   border-radius: 20%;
 }
 
-.players{
+.stats_header{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10%;
+}
+
+.stats_header h1{
+  background: linear-gradient(-100deg, #ee7752,#00008B);
+  border: 2px solid black;
+  font-family: fantasy;
+  color: black;
+}
+
+.stats_header h1:hover{
+  background: linear-gradient(-100deg, #ee7752, rgb(163, 1, 196));
 }
 
 body {
-    background: linear-gradient(-100deg, #ee7752, #00008B);
+    background: linear-gradient(-90deg, #ee7752, #00008B);
     background-size: 400% 400%;
     color: white;
 }
@@ -155,6 +169,7 @@ ul{
 .submit{
   width: 5vh;
   margin-bottom: 10%;
+  color: white;
 }
 
 form{
@@ -176,4 +191,18 @@ form{
   margin:auto;
   margin-bottom: 5%;
   font-size: 2vh;
+  box-shadow: 0px 1px 4px -2px #333;
+}
+
+.hidden{
+  display: none;
+}
+.active{
+  color: white !important;
+  background: linear-gradient(-100deg, #ee7752, rgb(163, 1, 196)) !important;
+  border-color: white !important;
+}
+
+.name a{
+  text-decoration: none;
 }

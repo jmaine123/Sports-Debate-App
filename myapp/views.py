@@ -107,6 +107,8 @@ def currentSeasonStats(player):
             "Points": tree.xpath('//h4[@data-tip="Points"]/parent::div/p[1]/text()')[0],
             "Rebounds": tree.xpath('//h4[text()="TRB"]/../p[1]/text()')[0],
             "Assists": tree.xpath('//h4[text()="AST"]/../p[1]/text()')[0],
+            "Block": tree.xpath('//tr[@id="per_game.2020"]/td[@data-stat="blk_per_g"]/text()')[0],
+            "Steals": tree.xpath('//tr[@id="per_game.2020"]/td[@data-stat="stl_per_g"]/text()')[0],
             "Field Goal": tree.xpath('//h4[text()="FG%"]/../p[1]/text()')[0],
             "3pt Field Goal": tree.xpath('//h4[text()="FG3%"]/../p[1]/text()')[0],
             "Free Throw": tree.xpath('//h4[text()="FT%"]/../p[1]/text()')[0]
@@ -122,6 +124,8 @@ def careerStats(player):
         "Points": tree.xpath('//h4[@data-tip="Points"]/parent::div/p[2]/text()')[0],
         "Rebounds": tree.xpath('//h4[text()="TRB"]/../p[2]/text()')[0],
         "Assists": tree.xpath('//h4[text()="AST"]/../p[2]/text()')[0],
+        "Block": tree.xpath('//tfoot/tr[@data-row="17"]/td[@data-stat="blk_per_g"]/text()'),
+        "Steals": tree.xpath('//tfoot/tr[@data-row="17"]/td[@data-stat="stl_per_g"]/text()'),
         "Field Goal": tree.xpath('//h4[text()="FG%"]/../p[2]/text()')[0],
         "3pt field goal": tree.xpath('//h4[text()="FG3%"]/../p[2]/text()')[0],
         "Free Throw": tree.xpath('//h4[text()="FT%"]/../p[2]/text()')[0],

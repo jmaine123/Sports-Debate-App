@@ -7,9 +7,9 @@
 
 <div class="player_comparisons">
   <div class="player_pic">
-    <img src="https://d2cwpp38twqe55.cloudfront.net/req/201912101/images/players/{{player.player_id}}.jpg" alt="">
+    <img src="https://d2cwpp38twqe55.cloudfront.net/req/201912101/images/players/{{player.player_id}}.jpg">
     <h2>{{player.id}}</h2>
-    <h1>{{player.name}}</h1>
+    <h1 class="name"><a href="/players/{{player.id}}">{{player.name}}</a></h1>
     <h3>{{player.height}}</h3>
   </div>
   <form class = "player_form" action="/comparison" method="post">
@@ -19,64 +19,58 @@
     <input class="submit" type="submit" value="Submit">
   </form>
   <div class="player_pic">
-    <img src="https://d2cwpp38twqe55.cloudfront.net/req/201912101/images/players/{{playertwo.player_id}}.jpg" alt="">
+    <img src="https://d2cwpp38twqe55.cloudfront.net/req/201912101/images/players/{{playertwo.player_id}}.jpg">
     <h2>{{playertwo.id}}</h2>
-    <h1>{{playertwo.name}}</h1>
+    <h1 class="name"><a href="/players/{{playertwo.id}}">{{playertwo.name}}</a></h1>
     <h3>{{playertwo.height}}</h3>
   </div>
   <div class = 'players'>
-    <div class="career">
-      <h1>Career</h1>
-      <ul class = "p_attr">
-        {% for key, stat in p1_careerstats.items%}
-          {% if key == "Nicknames"%}
-          <li class="dd-hover"><div>{{key}}:</div><div class="test">???</div><div class="dropdown-content">{{stat}}</div></li>
-          {% else %}
-            <li><div>{{key}}:</div><div class="highlight_stat">{{stat}}</div></li>
-          {% endif %}
-        {% endfor %}
-      </ul>
+    <div class="stats_header">
+      <h1 class="career active" onclick="Switch(this,0)">Career</h1>
+      <h1 class="season" onclick="Switch(this, 0)">Current</h1>
     </div>
-    <div class="season">
-      <h1>Current Season</h1>
-
-      <ul class="p_attr">
-        {% for key, stat in p1_current.items%}
+    <ul class ="p_attr careerStats">
+      {% for key, stat in p1_careerstats.items%}
+        {% if key == "Nicknames"%}
+        <li class="dd-hover"><div>{{key}}:</div><div class="test">???</div><div class="dropdown-content">{{stat}}</div></li>
+        {% else %}
           <li><div>{{key}}:</div><div class="highlight_stat">{{stat}}</div></li>
-        {% endfor %}
-      </ul>
-    </div>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    <ul class="p_attr currentStats hidden">
+      {% for key, stat in p1_current.items%}
+        <li><div>{{key}}:</div><div class="highlight_stat">{{stat}}</div></li>
+      {% endfor %}
+    </ul>
   </div>
   <div class="empty">
 
   </div>
   <div class="players">
-    <div class="career">
-      <h1>Career</h1>
-
-      <ul class="p_attr">
-        {% for key, stat in p2_careerstats.items%}
-          {% if key == "Nicknames"%}
-            <li class="dd-hover"><div>{{key}}:</div><div class="test">???</div><div class="dropdown-content">{{stat}}</div></li>
-          {% else %}
-            <li><div>{{key}}:</div><div class="highlight_stat">{{stat}}</div></li>
-          {% endif %}
-        {% endfor %}
-      </ul>
+    <div class="stats_header">
+      <h1 class="career active" onclick="Switch(this,1)">Career</h1>
+      <h1 class="season" onclick="Switch(this,1)">Current</h1>
     </div>
-    <div class="season">
-      <h1>Current Season</h1>
-
-      <ul class="p_attr">
-        {% for key, stat in p2_current.items%}
+    <ul class="p_attr careerStats">
+      {% for key, stat in p2_careerstats.items%}
+        {% if key == "Nicknames"%}
+          <li class="dd-hover"><div>{{key}}:</div><div class="test">???</div><div class="dropdown-content">{{stat}}</div></li>
+        {% else %}
           <li><div>{{key}}:</div><div class="highlight_stat">{{stat}}</div></li>
-        {% endfor %}
-      </ul>
-    </div>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    <ul class="p_attr currentStats hidden">
+      {% for key, stat in p2_current.items%}
+        <li><div>{{key}}:</div><div class="highlight_stat">{{stat}}</div></li>
+      {% endfor %}
+    </ul>
   </div>
   <div class="accolades">
+    <h2>Accolades</h2>
     <ul>
-      {% for stat in p2_accolades%}
+      {% for stat in p1_accolades%}
         <li><div>{{stat}}:</div></li>
       {% endfor %}
     </ul>
@@ -85,8 +79,9 @@
 
   </div>
   <div class="accolades">
+    <h2>Accolades</h2>
     <ul>
-      {% for stat in p1_accolades%}
+      {% for stat in p2_accolades%}
         <li><div>{{stat}}:</div></li>
       {% endfor %}
     </ul>
