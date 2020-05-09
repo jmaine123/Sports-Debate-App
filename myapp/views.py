@@ -105,9 +105,9 @@ def currentSeasonStats(player):
 
     player_obj = {}
     if age < 41:
-        salary = tree.xpath('//div[contains(@id, "all_contracts")]/comment()[1]')
-        soup = BeautifulSoup(str(salary[0]), "html.parser")
-        # fs = re.search(r'(?<=<!--\n)(.*\n)+',str(soup))
+        salary = tree.xpath('//div[contains(@id, "all_all_salaries")]/comment()[1]')
+        soup = BeautifulSoup(str(salary[0]), "lxml")
+        fs = re.search(r'(?<=\" data-stat=\"salary\" >\$)[\d,.]+',str(soup)).group(0)
         # fs = re.sub(r'(<!--\n|\n-->)','',str(soup),flags=re.DOTALL)
         # final_salary = BeautifulSoup(fs,"lxml").prettify()
         # final_salary = html.fromstring(final_salary)
@@ -122,9 +122,9 @@ def currentSeasonStats(player):
             "Field Goal": tree.xpath('//h4[text()="FG%"]/../p[1]/text()')[0],
             "3pt Field Goal": tree.xpath('//h4[text()="FG3%"]/../p[1]/text()')[0],
             "Free Throw": tree.xpath('//h4[text()="FT%"]/../p[1]/text()')[0],
-            # "Current Salary": final_salary.xpath('//table[@id="all_salaries"]/tbody/tr[last()]/td[last()]/text()')
+            "Current Salary": fs,
         }
-        # print(final_salary)
+        print(soup)
     return player_obj
 
 def careerStats(player):
