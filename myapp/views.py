@@ -92,6 +92,15 @@ def comparison(request):
 
     return render(request, 'comparison.html', {'form': form})
 
+def scrapeComment(xp, regex, tree):
+    elm = tree.xpath(xp)
+    soup = BeautifulSoup(str(elm[0]), "lxml")
+    final_elm = re.findall(regex, str(soup))
+    if final_elm:
+        return final_elm
+    else:
+        return " "
+
 def currentSeasonStats(player):
     player = get_object_or_404(Playersinfo, name = player)
     p_url = 'https://www.basketball-reference.com' + player.url
@@ -101,18 +110,15 @@ def currentSeasonStats(player):
     birth_year = re.search('(?<=, )[\d].+', birth_date)
     # current_year = int(datetime.now().year)
     age = 2020 - int(birth_year.group(0))
-    invalid_tags = ['<!--', '--!>']
 
     player_obj = {}
     if age < 41:
-        salary = tree.xpath('//div[contains(@id, "all_all_salaries")]/comment()[1]')
+        salary = tree.xpath('//div[contains(@id, "all_contracts")]/comment()[1]')
         soup = BeautifulSoup(str(salary[0]), "lxml")
-        fs = re.search(r'(?<=\" data-stat=\"salary\" >\$)[\d,.]+',str(soup)).group(0)
-        # fs = re.sub(r'(<!--\n|\n-->)','',str(soup),flags=re.DOTALL)
-        # final_salary = BeautifulSoup(fs,"lxml").prettify()
-        # final_salary = html.fromstring(final_salary)
+        # fs = re.search(r'(?<=\" data-stat=\"salary\" >\$)[\d,.]+',str(soup)).group(0)
+        # s = scrapeComment('//div[contains(@id, "all_contracts_gsw")]/comment()[1]', )
+        current_salary = scrapeComment('//div[contains(@id, "all_contracts")]/comment()[1]', '(?<=\<span class=\"salary\-pl\">\$)[\d.,]+', tree)
 
-        # final_salary = re.search('(?<=class=\"salary-pl\">)[\$\w\,]+', str(salary)).group(0)
         player_obj = {
             "Points": tree.xpath('//h4[@data-tip="Points"]/parent::div/p[1]/text()')[0],
             "Rebounds": tree.xpath('//h4[text()="TRB"]/../p[1]/text()')[0],
@@ -122,9 +128,9 @@ def currentSeasonStats(player):
             "Field Goal": tree.xpath('//h4[text()="FG%"]/../p[1]/text()')[0],
             "3pt Field Goal": tree.xpath('//h4[text()="FG3%"]/../p[1]/text()')[0],
             "Free Throw": tree.xpath('//h4[text()="FT%"]/../p[1]/text()')[0],
-            "Current Salary": fs,
+            "Current Salary": "$" + current_salary[0],
         }
-        print(soup)
+        print(current_salary)
     return player_obj
 
 def careerStats(player):
@@ -132,6 +138,9 @@ def careerStats(player):
     p_url = 'https://www.basketball-reference.com' + player.url
     page = requests.get(p_url)
     tree = html.fromstring(page.content)
+    career_salary = scrapeComment('//div[contains(@id, "all_all_salaries")]/comment()[1]', '(?<=\" data-stat=\"salary\" >\$)[\d,.]+',tree)
+    exp_str = tree.xpath('//strong[contains(text(),"Experience:")]/../text()')
+
     player_career ={
         "Points": tree.xpath('//h4[@data-tip="Points"]/parent::div/p[2]/text()')[0],
         "Rebounds": tree.xpath('//h4[text()="TRB"]/../p[2]/text()')[0],
@@ -141,8 +150,11 @@ def careerStats(player):
         "Field Goal": tree.xpath('//h4[text()="FG%"]/../p[2]/text()')[0],
         "3pt field goal": tree.xpath('//h4[text()="FG3%"]/../p[2]/text()')[0],
         "Free Throw": tree.xpath('//h4[text()="FT%"]/../p[2]/text()')[0],
-        "Nicknames": tree.xpath('//div[@itemtype="https://schema.org/Person"]/p[2]/text()')[0]
+        "Nicknames": tree.xpath('//div[@itemtype="https://schema.org/Person"]/p[2]/text()')[0],
+        "Career Salary": "$" + career_salary[0],
+        "Experience": exp_str[1]
     }
+    print(exp_str[1])
     return player_career
 
 def playerAccolades(player):
