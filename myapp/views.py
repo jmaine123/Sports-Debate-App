@@ -101,6 +101,12 @@ def scrapeComment(xp, regex, tree):
     else:
         return " "
 
+def validatescrape(elm):
+    if elm:
+        return elm[1]
+    else:
+        return ""
+
 def currentSeasonStats(player):
     player = get_object_or_404(Playersinfo, name = player)
     p_url = 'https://www.basketball-reference.com' + player.url
@@ -152,9 +158,9 @@ def careerStats(player):
         "Free Throw": tree.xpath('//h4[text()="FT%"]/../p[2]/text()')[0],
         "Nicknames": tree.xpath('//div[@itemtype="https://schema.org/Person"]/p[2]/text()')[0],
         "Career Salary": "$" + career_salary[0],
-        "Experience": exp_str[1]
+        "Experience": validatescrape(exp_str)
     }
-    print(exp_str[1])
+    # print(exp_str[1])
     return player_career
 
 def playerAccolades(player):
