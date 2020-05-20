@@ -3,6 +3,8 @@ from django.contrib.auth.models import User, auth
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
 # Create your views here.
 
 def register(request):
@@ -34,4 +36,22 @@ def register(request):
 
 
 def login(request):
-    return render(request, 'login.html')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+            # Redirect to a success page.
+            ...
+        else:
+            # Return an 'invalid login' error message.
+            messages.info(request, 'Email or password not valid')
+            return render(request, 'login.html')
+    else:
+        return render(request, 'login.html')
+
+        
+def logout(request):
+    logout(request)
