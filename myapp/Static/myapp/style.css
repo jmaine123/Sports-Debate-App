@@ -206,3 +206,11 @@ form{
 .name a{
   text-decoration: none;
 }
+
+.register input{
+  width: 300px;
+}
+
+.register_text{
+  color: red;
+}
