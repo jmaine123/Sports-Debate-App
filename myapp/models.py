@@ -6,6 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Boxscore(models.Model):
@@ -37,7 +38,11 @@ class Playersinfo(models.Model):
 
 
 class Debate(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    p1_id = mmodels.IntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    p1_id = models.IntegerField(default=0)
     p2_id = models.IntegerField(default=0)
     votes = models.IntegerField(default=0)
+
+    class Meta:
+        managed = False
+        db_table = 'Debate'
