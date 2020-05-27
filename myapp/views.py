@@ -189,6 +189,6 @@ def comparisons(request, playerone_name, playertwo_name):
     p1_accolades = playerAccolades(playerone_name)
     p2_accolades = playerAccolades(playertwo_name)
     form = PlayerForm(request.POST, initial={'player': player.name})
-    PlayerRequestForm(request)
+    # PlayerRequestForm(request)
 
     return render(request, 'comparisons.html', {'player':player, 'playertwo': player_two, 'p1_current': p1_current, 'p2_current': p2_current, 'p1_careerstats': p1_careerstats, 'p2_careerstats': p2_careerstats, 'p1_accolades': p1_accolades, 'p2_accolades': p2_accolades, 'form': form})

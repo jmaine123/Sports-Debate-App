@@ -34,3 +34,10 @@ class Playersinfo(models.Model):
     class Meta:
         managed = False
         db_table = 'playersInfo'
+
+
+class Debate(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    p1_id = mmodels.IntegerField(default=0)
+    p2_id = models.IntegerField(default=0)
+    votes = models.IntegerField(default=0)
