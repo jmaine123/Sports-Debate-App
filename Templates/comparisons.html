@@ -88,5 +88,17 @@
   </div>
 </div>
 
+<form class="" action="/createDebate" method="post">
+  {% csrf_token %}
+  <!-- <input type="hidden" name="p1_id" value="{{player.id}}">
+  <input type="hidden" name="p2_id" value="{{playertwo.id}}"> -->
+  <label for="">{{player.name}}</label>
+  <input type="radio" name="user_pick" value="1">
+  <label for="">{{playertwo.name}}</label>
+  <input type="radio" name="user_pick" value="2">
+  <input type="submit" name="vote" value="vote">
+
+</form>
+
 
 {% endblock %}

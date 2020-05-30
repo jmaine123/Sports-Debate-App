@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 from lxml import html
 from .forms import PlayerForm
+from .debates import DebateForm
 
 # Create your views here.
 def dailygames(m,d,y):
@@ -192,3 +193,7 @@ def comparisons(request, playerone_name, playertwo_name):
     # PlayerRequestForm(request)
 
     return render(request, 'comparisons.html', {'player':player, 'playertwo': player_two, 'p1_current': p1_current, 'p2_current': p2_current, 'p1_careerstats': p1_careerstats, 'p2_careerstats': p2_careerstats, 'p1_accolades': p1_accolades, 'p2_accolades': p2_accolades, 'form': form})
+
+
+def createDebate():
+    return render(request, 'debates.html' )
