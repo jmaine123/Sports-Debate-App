@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from myapp.models import Playersinfo
+from myapp.models import Playersinfo, Debate
+from django.contrib.auth.models import User, auth
+from django.contrib.auth.decorators import login_required
 import datetime
 import re
 import requests
@@ -195,5 +197,33 @@ def comparisons(request, playerone_name, playertwo_name):
     return render(request, 'comparisons.html', {'player':player, 'playertwo': player_two, 'p1_current': p1_current, 'p2_current': p2_current, 'p1_careerstats': p1_careerstats, 'p2_careerstats': p2_careerstats, 'p1_accolades': p1_accolades, 'p2_accolades': p2_accolades, 'form': form})
 
 
-def createDebate():
-    return render(request, 'debates.html' )
+def createDebate(request):
+    if request.method == "POST":
+        print('vote sent')
+        user_id = request.POST['user']
+        if user_id == 'None':
+            return HttpResponseRedirect('/accounts/login')
+        else:
+            user = User.objects.get(id=user_id)
+            debate = Debate()
+            debate.user = user
+            debate.p1_id = request.POST['p1_id']
+            debate.p2_id = request.POST['p2_id']
+            debate.p1_name = request.POST['p1_name']
+            debate.p2_name = request.POST['p2_name']
+            debate.p1_vote = 0
+            debate.p2_vote = 0
+            debate.p1_user_id = request.POST['p1_user_id']
+            debate.p2_user_id = request.POST['p2_user_id']
+            debate.user_pick = request.POST['user_pick']
+
+            if debate.user_pick == '1':
+                debate.p1_vote += 1
+            else:
+                debate.p2_vote+=1
+
+            debate.save()
+
+            return HttpResponseRedirect('accounts/profile')
+    else:
+        return HttpResponseRedirect('accounts/profile')

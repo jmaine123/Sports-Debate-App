@@ -90,13 +90,18 @@
 
 <form class="" action="/createDebate" method="post">
   {% csrf_token %}
-  <!-- <input type="hidden" name="p1_id" value="{{player.id}}">
-  <input type="hidden" name="p2_id" value="{{playertwo.id}}"> -->
+  <input type="hidden" name="p1_id" value="{{player.id}}">
+  <input type="hidden" name="p2_id" value="{{playertwo.id}}">
+  <input type="hidden" name="user" value="{{user.id}}">
+  <input type="hidden" name="p1_user_id" value="{{player.player_id}}">
+  <input type="hidden" name="p2_user_id" value="{{playertwo.player_id}}">
   <label for="">{{player.name}}</label>
+  <input type="hidden" name="p1_name" value="{{player.name}}">
   <input type="radio" name="user_pick" value="1">
   <label for="">{{playertwo.name}}</label>
+  <input type="hidden" name="p2_name" value="{{playertwo.name}}">
   <input type="radio" name="user_pick" value="2">
-  <input type="submit" name="vote" value="vote">
+  <input type="submit" name="vote" value="Vote">
 
 </form>
 

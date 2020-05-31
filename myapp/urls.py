@@ -8,4 +8,5 @@ urlpatterns = [
     path('players/<int:player_id>', views.player, name='player'),
     path('comparison', views.comparison, name='comparison'),
     path('comparisons/<str:playerone_name>&<str:playertwo_name>', views.comparisons, name='comparisons'),
+    path('createDebate', views.createDebate, name='createDebate'),
 ]

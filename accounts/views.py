@@ -5,6 +5,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
+from myapp.models import Playersinfo, Debate
 # Create your views here.
 
 def register(request):
@@ -58,4 +59,8 @@ def logout(request):
     return redirect('/')
 
 def profile(request):
-    return render(request, 'profile.html')
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        debates = Debate.objects.filter(user_id=user_id)
+        print(debates)
+    return render(request, 'profile.html',{'debates':debates})

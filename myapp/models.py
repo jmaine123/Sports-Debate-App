@@ -41,9 +41,13 @@ class Debate(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     p1_id = models.IntegerField(default=0)
     p2_id = models.IntegerField(default=0)
+    p1_name = models.TextField(blank=True, null=True)
+    p2_name = models.TextField(blank=True, null=True)
+    p1_user_id = models.TextField(blank=True, null=True)
+    p2_user_id = models.TextField(blank=True, null=True)
     p1_vote = models.IntegerField(default=0)
     p2_vote = models.IntegerField(default=0)
-    user_pick = models.IntegerField(default=1)
+    user_pick = models.TextField(default='1')
 
     class Meta:
         managed = True
