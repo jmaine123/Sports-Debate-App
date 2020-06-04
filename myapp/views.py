@@ -227,3 +227,11 @@ def createDebate(request):
             return HttpResponseRedirect('accounts/profile')
     else:
         return HttpResponseRedirect('accounts/profile')
+
+def deleteDebate(request):
+    if request.method == "POST":
+        id = request.POST['debate_id']
+        debate = Debate.objects.get(id=id)
+        debate.delete()
+        print('Debate Deleted')
+        return HttpResponseRedirect('accounts/profile')

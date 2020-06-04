@@ -9,4 +9,5 @@ urlpatterns = [
     path('comparison', views.comparison, name='comparison'),
     path('comparisons/<str:playerone_name>&<str:playertwo_name>', views.comparisons, name='comparisons'),
     path('createDebate', views.createDebate, name='createDebate'),
+    path('deleteDebate', views.deleteDebate, name='deleteDebate'),
 ]

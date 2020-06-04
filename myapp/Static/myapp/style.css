@@ -1,8 +1,19 @@
+.main_div{
+  margin: 5%;
+}
+
+.welcome{
+  text-align: center;
+  font-size: 4vh;
+}
 
 .nav{
   text-align: center;
   height: 10vh;
   font-size: 3vh;
+}
+
+table{
   margin: 5%;
 }
 .nav li{
@@ -217,22 +228,62 @@ form{
 
 .profile{
   margin: 10%;
+  display: grid;
+  grid-template-columns: 50% 50%;
 }
 
 .debate_table{
-  position: relative;
-  border: 5px solid white;
-  width:50%;
-  left:48%;
 }
 
 .debate_chart{
+  background: linear-gradient(-100deg, rgb(27, 18, 129),rgb(71, 107, 212), black);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  margin: 5%;
+  margin: 2%;
+  padding: 2%;
+  border: 3px solid white;
+  border-radius: 10px;
+  text-align: center;
 }
 
 .profile_pic{
   height: 30px;
   width: 30px
+}
+
+.debateform{
+  margin: auto;
+  margin-bottom: 10%;
+  border: 5px solid white;
+  background-color: rgb(189, 12, 33);
+  width:20%;
+  height:5%;
+  text-align: center;
+  font-size: 30px;
+}
+
+.debate_buttons{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  margin: auto;
+  width: 100%;
+  height: 100%;
+
+}
+
+.comp_stat a{
+  background-color: rgb(38, 90, 190);
+  color: white;
+  text-decoration: none;
+  padding: 2%;
+  font-family: sans-serif;
+  border: 2px solid rgb(134, 201, 233);
+  border-radius: 5px;
+}
+
+.delete{
+  background-color: red;
+  color: white;
+  padding: 1%;
+  border-radius: 5px;
 }
