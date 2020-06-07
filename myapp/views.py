@@ -36,9 +36,20 @@ def dailygames(m,d,y):
     return games
 
 def home(request):
+    alphabet =[]
+    for i in range(ord('A'), ord('Z')+1):
+        alphabet.append(chr(i))
     date = datetime.datetime.now()
     players = Playersinfo.objects.all()[:200]
-    return render(request, 'home.html', {'players':players, 'date':date})
+    return render(request, 'home.html', {'players':players, 'date':date, 'alphabet':alphabet})
+
+def index(request, letter):
+    alphabet =[]
+    for i in range(ord('A'), ord('Z')+1):
+        alphabet.append(chr(i))
+    date = datetime.datetime.now()
+    players = Playersinfo.objects.filter(name__startswith=letter)
+    return render(request, 'index.html', {'players':players, 'date':date, 'alphabet':alphabet})
 
 def boxscore(request):
     date = datetime.datetime.now()

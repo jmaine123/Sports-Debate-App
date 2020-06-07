@@ -23,7 +23,7 @@
         <h3>Votes: {{debate.p2_vote}}</h3>
       </div>
       <div class="comp_stat"><a href="/comparisons/{{debate.p1_name}}&{{debate.p2_name}}" name="button">See Comparison</a></div>
-      <div class="debate_form">        
+      <div class="delete_form">
         <form class="" action="/deleteDebate" method="post">
           {% csrf_token %}
           <input type="hidden" name="debate_id" value="{{debate.id}}">
