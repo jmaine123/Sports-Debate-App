@@ -1,33 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="alphabet">
-  {%for i in alphabet%}
-  <div class="">
-    <a class="alphabet" id="{{i}}">{{i}}</a>
-  </div>
-  {% endfor %}
-</div>
-
-
-<table>
-  <tbody>
-    {% for player in players %}
-      <tr class = 'pcell' href="">
-          <td id= {{player.player_id}}>
-            <h2><a class="p_index" href="{% url 'player' player.id %}">{{player.name}}</a></h2>
-            <h3>{{player.id}}</h3>
-            <h3>{{player.height}}</h3>
-            <h3>{{player.college}}</h3>
-            <h3>{{player.position}}</h3>
-            <h4>{{player.birthdate}}</h4>
-            <img src="https://d2cwpp38twqe55.cloudfront.net/req/201912101/images/players/{{player.player_id}}.jpg" alt="">
-          </td>
-      </tr>
-
-    {% endfor %}
-  </tbody>
-</table>
 
 
 

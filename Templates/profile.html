@@ -7,6 +7,12 @@
     <h1>User Profile</h1>
     <h2>{{user.username}}</h2>
     <img class="profile_pic" src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.pngitem.com%2Fpimgs%2Fm%2F146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png&imgrefurl=https%3A%2F%2Fwww.pngitem.com%2Fmiddle%2FmJiimi_my-profile-icon-blank-profile-picture-circle-hd%2F&tbnid=oXlyOuq8MWMJnM&vet=12ahUKEwjzp_PWqOLpAhWVWN8KHUwYB98QMygKegUIARCrAg..i&docid=ZerAWmokvNhyTM&w=860&h=681&q=profile%20picture&ved=2ahUKEwjzp_PWqOLpAhWVWN8KHUwYB98QMygKegUIARCrAg" alt="">
+    <div class="">
+      {% for u in users%}
+      <h1>{{u.username}}</h1>
+      <button type="button" name="button" class="follow_btn"><a>FOLLOW</a></button>
+      {% endfor %}
+    </div>
   </div>
 
   <div class="debate_table">

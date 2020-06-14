@@ -14,11 +14,11 @@
         <li><a href="/boxscore">Box Score</a></li>
         <li><a href="/comparison">Comparison</a></li>
         {% if user.is_authenticated %}
-        <li><a href="accounts/logout">Log Out</a></li>
-        <li><a href="accounts/profile">Profile</a></li>
+        <li><a href="/accounts/logout">Log Out</a></li>
+        <li><a href="/accounts/profile">Profile</a></li>
         {% else %}
-        <li><a href="accounts/login">Log In</a></li>
-        <li><a href="accounts/register">Register</a></li>
+        <li><a href="/accounts/login">Log In</a></li>
+        <li><a href="/accounts/register">Register</a></li>
         {% endif %}
       </ul>
       {% if user.is_authenticated%}

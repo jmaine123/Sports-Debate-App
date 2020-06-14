@@ -62,5 +62,6 @@ def profile(request):
     if request.user.is_authenticated:
         user_id = request.user.id
         debates = Debate.objects.filter(user_id=user_id)
+        users = User.objects.all()
         print(debates)
-    return render(request, 'profile.html',{'debates':debates})
+    return render(request, 'profile.html',{'debates':debates, 'users':users})
