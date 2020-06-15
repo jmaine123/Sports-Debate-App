@@ -52,3 +52,16 @@ class Debate(models.Model):
     class Meta:
         managed = True
         db_table = 'debate'
+
+
+class Follower(models.Model):
+    follower = models.ForeignKey(User, related_name='following', on_delete=models.CASCADE)
+    following = models.ForeignKey(User, related_name='followers', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('follower', 'following')
+        db_table ='follower'
+
+    def __unicode__(self):
+        return u'%s follows %s' % (self.follower, self.following)

@@ -5,7 +5,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
-from myapp.models import Playersinfo, Debate
+from myapp.models import Playersinfo, Debate, Follower
 # Create your views here.
 
 def register(request):
@@ -61,7 +61,28 @@ def logout(request):
 def profile(request):
     if request.user.is_authenticated:
         user_id = request.user.id
+        current_user = User.objects.get(pk=user_id)
         debates = Debate.objects.filter(user_id=user_id)
-        users = User.objects.all()
-        print(debates)
-    return render(request, 'profile.html',{'debates':debates, 'users':users})
+        following_ids = current_user.following.all()
+        following = []
+        for f in following_ids:
+            following.append(User.objects.get(pk=f.following_id))
+
+        other_users = User.objects.exclude(id = user_id)
+    return render(request, 'profile.html',{'debates':debates, 'other_users':other_users, 'following':following})
+
+
+def follow(request, user_id, u_id):
+    user = User.objects.get(pk=user_id)
+    following_user = User.objects.get(pk=u_id)
+    Follower.objects.create(follower_id = user_id,following_id= u_id)
+    print('%s is following %s'%(user, following_user))
+    return redirect('/accounts/profile')
+
+def unfollow(request, user_id, u_id):
+    user = User.objects.get(pk=user_id)
+    following_user = User.objects.get(pk=u_id)
+    follow_obj = Follower.objects.get(follower_id = user_id,following_id= u_id)
+    follow_obj.delete()
+    print('%s stop following %s'%(user, following_user))
+    return redirect('/accounts/profile')
