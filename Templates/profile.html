@@ -3,20 +3,40 @@
 {% block content %}
 
 <div class="profile">
-  <div class="user_profile">
-    <h1>User Profile</h1>
-    <h2>{{user.username}}</h2>
-    <img class="profile_pic" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="">
-    <div class="follow_count">
-      <div class="">
-        <h1>Following: <span>0</span></h1>
+  <div class="user_info">
+    <div class="user_profile">
+      <h1>User Profile</h1>
+      <h2>{{user.username}}</h2>
+      <div class="profile_pic">
+        <img src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="">
+
+      </div>
+      <div class="follow_count">
+        <div class="">
+          <h1>Following: <span>{{follow_count}}</span></h1>
+        </div>
+        <div class="">
+          <h1>Followers: <span>{{followers_count}}</span></h1>
+        </div>
+      </div>
+    </div>
+    <div class="other_users">
+      <div class="follow_users">
+        <h2>FOLLOWING USERS</h2>
+        {% for f in following %}
+        <h2>{{f.username}}</h2>
+        <a href="/accounts/unfollow/{{user.id}}&{{f.id}}" class="follow_btn unfollow">UnFollow</a>
+        {% endfor %}
       </div>
       <div class="">
-        <h1>Followers: <span>0</span></h1>
+        <h2>OTHER USERS</h2>
+        {% for u in other_users%}
+        <h2>{{u.username}}</h2>
+        <a href="/accounts/follow/{{user.id}}&{{u.id}}" class="follow_btn">Follow</a>
+        {% endfor %}
       </div>
     </div>
   </div>
-
   <div class="debate_table">
     {% for debate in debates %}
     <div class="debate_chart">
@@ -41,23 +61,6 @@
     </div>
     {%endfor%}
 
-  </div>
-  <div class="other_users">
-    <div class="follow_users">
-      <h2>FOLLOWING USERS</h2>
-      {% for f in following %}
-      <h2>{{f.username}}</h2>
-      <a href="/accounts/unfollow/{{user.id}}&{{f.id}}" class="follow_btn unfollow">UnFollow</a>
-      {% endfor %}
-    </div>
-    <div class="">
-      <h2>OTHER USERS</h2>
-      {% for u in other_users%}
-      <h2>{{u.username}}</h2>
-      <a href="/accounts/follow/{{user.id}}&{{u.id}}" class="follow_btn">Follow</a>
-      <a href="/accounts/unfollow/{{user.id}}&{{u.id}}" class="follow_btn unfollow">UnFollow</a>
-      {% endfor %}
-    </div>
   </div>
 </div>
 

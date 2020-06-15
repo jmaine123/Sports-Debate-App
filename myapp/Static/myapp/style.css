@@ -319,11 +319,23 @@ form{
   display: grid;
   grid-template-columns: 40% 40%;
   grid-column-gap: 10%;
-  grid-template-rows: 20% 30%;
 }
 
 .user_profile{
   text-align: center;
+  margin-bottom: 5%;
+}
+
+.profile_pic{
+  height: 100%;
+  width: 60%;
+  margin: 5% auto;
+}
+
+.profile_pic img{
+  height: 100%;
+  width: 100%;
+  border: 5px solid black;
 }
 
 .follow_count{
@@ -341,6 +353,7 @@ form{
   background: linear-gradient(-100deg, rgb(27, 18, 129), rgba(99, 14, 125, 0.30));
   border: 2px solid white;
   border-radius: 10px;
+  padding: 5%;
 }
 
 .follow_form input{
@@ -384,11 +397,6 @@ form{
   width: 60%;
 }
 
-.profile_pic{
-  height: 40%;
-  width: 40%;
-  border: 5px solid black;
-}
 
 .debateform{
   margin: auto;

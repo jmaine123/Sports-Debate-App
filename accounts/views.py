@@ -63,13 +63,23 @@ def profile(request):
         user_id = request.user.id
         current_user = User.objects.get(pk=user_id)
         debates = Debate.objects.filter(user_id=user_id)
-        following_ids = current_user.following.all()
+        following_obj = current_user.following.all()
         following = []
-        for f in following_ids:
+        f_ids = []
+        followers_obj = current_user.followers.all()
+        followers = []
+        followers_ids = []
+        for f in following_obj:
             following.append(User.objects.get(pk=f.following_id))
+            f_ids.append(f.following_id)
 
-        other_users = User.objects.exclude(id = user_id)
-    return render(request, 'profile.html',{'debates':debates, 'other_users':other_users, 'following':following})
+        for f in followers_obj:
+            followers.append(User.objects.get(pk=f.follower_id))
+            followers_ids.append(f.follower_id)
+        follow_count = len(f_ids)
+        followers_count = len(followers_ids)
+        other_users = User.objects.exclude(id = user_id).exclude(id__in=f_ids)
+    return render(request, 'profile.html',{'debates':debates, 'other_users':other_users, 'following':following, 'follow_count':follow_count, 'followers_count':followers_count})
 
 
 def follow(request, user_id, u_id):
