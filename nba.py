@@ -9,7 +9,7 @@ import csv
 def scrapePlayers():
     global players
     players=[]  # a list to store players
-    for i in range(ord('a'), ord('t')+1):
+    for i in range(ord('a'), ord('z')+1):
         # print (chr(i))
 
         URL = 'https://www.basketball-reference.com/players/%s/'%(chr(i))

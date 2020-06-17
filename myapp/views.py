@@ -158,7 +158,7 @@ def careerStats(player):
     p_url = 'https://www.basketball-reference.com' + player.url
     page = requests.get(p_url)
     tree = html.fromstring(page.content)
-    career_salary = scrapeComment('//div[contains(@id, "all_all_salaries")]/comment()[1]', '(?<=\" data-stat=\"salary\" >\$)[\d,.]+',tree)
+    # career_salary = scrapeComment('//div[contains(@id, "all_all_salaries")]/comment()[1]', '(?<=\" data-stat=\"salary\" >\$)[\d,.]+',tree)
     exp_str = tree.xpath('//strong[contains(text(),"Experience:")]/../text()')
 
     player_career ={
@@ -171,7 +171,7 @@ def careerStats(player):
         "3pt field goal": tree.xpath('//h4[text()="FG3%"]/../p[2]/text()')[0],
         "Free Throw": tree.xpath('//h4[text()="FT%"]/../p[2]/text()')[0],
         "Nicknames": tree.xpath('//div[@itemtype="https://schema.org/Person"]/p[2]/text()')[0],
-        "Career Salary": "$" + career_salary[0],
+        # "Career Salary": "$" + career_salary[0],
         "Experience": validatescrape(exp_str)
     }
     # print(exp_str[1])
