@@ -11,4 +11,5 @@ urlpatterns = [
     path('index/<str:letter>', views.index, name='index'),
     path('createDebate', views.createDebate, name='createDebate'),
     path('deleteDebate', views.deleteDebate, name='deleteDebate'),
+    path('submitStatus', views.submitStatus, name='submitStatus'),
 ]

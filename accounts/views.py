@@ -5,7 +5,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
-from myapp.models import Playersinfo, Debate, Follower
+from myapp.models import Playersinfo, Debate, Follower, DebateStatus
 # Create your views here.
 
 def register(request):
@@ -63,6 +63,7 @@ def profile(request):
         user_id = request.user.id
         current_user = User.objects.get(pk=user_id)
         debates = Debate.objects.filter(user_id=user_id)
+        user_status = DebateStatus.objects.filter(user_id=user_id).last
         following_obj = current_user.following.all()
         following = []
         f_ids = []
@@ -79,7 +80,7 @@ def profile(request):
         follow_count = len(f_ids)
         followers_count = len(followers_ids)
         other_users = User.objects.exclude(id = user_id).exclude(id__in=f_ids)
-    return render(request, 'profile.html',{'debates':debates, 'other_users':other_users, 'following':following, 'follow_count':follow_count, 'followers_count':followers_count})
+    return render(request, 'profile.html',{'debates':debates, 'other_users':other_users, 'following':following, 'follow_count':follow_count, 'followers_count':followers_count, 'user_status':user_status})
 
 
 def follow(request, user_id, u_id):

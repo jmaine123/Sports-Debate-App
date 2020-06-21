@@ -65,3 +65,16 @@ class Follower(models.Model):
 
     def __unicode__(self):
         return u'%s follows %s' % (self.follower, self.following)
+
+class DebateStatus(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=100)
+    open_debate = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    agree = models.IntegerField(default=0)
+    disagree = models.IntegerField(default=0)
+    opinion_total = models.IntegerField(default=0)
+
+
+    class Meta:
+        db_table = 'debateStatus'

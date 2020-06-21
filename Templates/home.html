@@ -2,6 +2,76 @@
 {% block content %}
 
 
+{% if user.is_authenticated %}
+<form class="debate_status" action="/submitStatus" method="post">
+  {% csrf_token %}
+  <!-- {% for field in form %}
+      <div class="fieldWrapper">
+        {% if field.label_tag == "Open debate"%}
+          {{ field.errors }}
+          {{ field.label_tag }}{{ field }}
+        {% else %}
+          {{field.errors}}
+          {{field.label_tag}}<br>{{field}}
+        {% endif %}
+      </div>
+  {% endfor %} -->
+
+  <input class="status_bar"type="text" name="status" value="Place your debate"><br>
+  <label for="">Open Debate: </label>
+  <label for="">Yes</label>
+  <input type="checkbox" name="open_debate" value="True">
+  <label for="">No</label>
+  <input type="checkbox" name="open_debate" value="False">
+  <input type="hidden" name="user_id" value="{{user.id}}"><br>
+  <input class="status_submit" type="submit" name="submit" value="SUBMIT"><br>
+</form>
+
+{% endif %}
+
+<div class="users_activities">
+  <div class="recent_status">
+    <h1>Recent Status</h1>
+    {% for status in all_status %}
+    <div class="">
+      <h1>{{status.status}}</h1>
+      <h4>By: {{status.user.username}}</h4>
+      <h5>{{status.created_at}}</h5>
+      <div class="opinion">
+        <div class="">Agree</div>
+        <div class="">Disagree</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="user_debates">
+    <h1>Recent Debates</h1>
+    {% for debate in all_debates %}
+    <form class="debate_card" action="/player_vote" method="post">
+      <div class="">
+        <h1>{{debate.p1_name}}</h1>
+        <img src="https://d2cwpp38twqe55.cloudfront.net/req/201912101/images/players/{{debate.p1_user_id}}.jpg">
+        <h2>Votes: {{debate.p1_vote}}</h2>
+        {% if user.is_authenticated %}
+          <input type="button" name="player_vote" value="Player 1">
+        {% endif%}
+      </div>
+      <div class="">
+        <h1>{{debate.p2_name}}</h1>
+        <img src="https://d2cwpp38twqe55.cloudfront.net/req/201912101/images/players/{{debate.p2_user_id}}.jpg">
+        <h2>Votes: {{debate.p2_vote}}</h2>
+        {% if user.is_authenticated%}
+          <input type="button" name="player_vote" value="Player two">
+        {% endif %}
+      </div>
+      <input type="hidden" name="debate_card" value="{{debate.id}}">
+    </form>
+    {% endfor %}
+  </div>
+
+</div>
+
 
 
 {% endblock %}

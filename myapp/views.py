@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from myapp.models import Playersinfo, Debate
+from myapp.models import Playersinfo, Debate, DebateStatus
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 import datetime
@@ -8,7 +8,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from lxml import html
-from .forms import PlayerForm
+from .forms import PlayerForm, DebateStatusBar
 from .debates import DebateForm
 
 # Create your views here.
@@ -36,12 +36,14 @@ def dailygames(m,d,y):
     return games
 
 def home(request):
-    alphabet =[]
-    for i in range(ord('A'), ord('Z')+1):
-        alphabet.append(chr(i))
-    date = datetime.datetime.now()
-    players = Playersinfo.objects.all()[:200]
-    return render(request, 'home.html', {'players':players, 'date':date, 'alphabet':alphabet})
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        all_status = DebateStatus.objects.all().exclude(id=user_id)
+        all_debates = Debate.objects.all().exclude(id=user_id)
+    else:
+        all_status = DebateStatus.objects.all()
+        all_debates = Debate.objects.all()
+    return render(request, 'home.html', {"all_status": all_status, "all_debates":all_debates})
 
 def index(request, letter):
     alphabet =[]
@@ -202,7 +204,7 @@ def comparisons(request, playerone_name, playertwo_name):
     p2_careerstats = careerStats(playertwo_name)
     p1_accolades = playerAccolades(playerone_name)
     p2_accolades = playerAccolades(playertwo_name)
-    form = PlayerForm(request.POST, initial={'player': player.name})
+    form = PlayerForm()
     # PlayerRequestForm(request)
 
     return render(request, 'comparisons.html', {'player':player, 'playertwo': player_two, 'p1_current': p1_current, 'p2_current': p2_current, 'p1_careerstats': p1_careerstats, 'p2_careerstats': p2_careerstats, 'p1_accolades': p1_accolades, 'p2_accolades': p2_accolades, 'form': form})
@@ -245,4 +247,18 @@ def deleteDebate(request):
         debate = Debate.objects.get(id=id)
         debate.delete()
         print('Debate Deleted')
+        return HttpResponseRedirect('accounts/profile')
+
+
+def submitStatus(request):
+    if request.method == "POST":
+        user_id = request.POST['user_id']
+        ds = DebateStatus()
+        ds.status = request.POST['status']
+        if request.POST['open_debate']== "True":
+            ds.open_debate = True
+        else:
+            ds.open_debate = False
+        ds.user = User.objects.get(id=user_id)
+        ds.save()
         return HttpResponseRedirect('accounts/profile')
