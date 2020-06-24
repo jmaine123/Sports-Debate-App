@@ -33,13 +33,21 @@
   <div class="recent_status">
     <h1>Recent Status</h1>
     {% for status in all_status %}
-    <div class="">
+    <div class="status_card">
       <h1>{{status.status}}</h1>
       <h4>By: {{status.user.username}}</h4>
       <h5>{{status.created_at}}</h5>
+      <div class="approval_count">
+        <div class="">
+          <h2>Agree: {{status.agree}}</h2>
+        </div>
+        <div class="">
+          <h2>Disagree: {{status.disagree}}</h2>
+        </div>
+      </div>
       <div class="opinion">
-        <div class="">Agree</div>
-        <div class="">Disagree</div>
+        <a href="statusCount/{{status.id}}&agree" class=""><div class="">Agree</div></a>
+        <a href="statusCount/{{status.id}}&disagree" class=""><div class="">Disagree</div></a>
       </div>
     </div>
     {% endfor %}

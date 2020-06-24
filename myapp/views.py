@@ -262,3 +262,21 @@ def submitStatus(request):
         ds.user = User.objects.get(id=user_id)
         ds.save()
         return HttpResponseRedirect('accounts/profile')
+
+def statusCount(request, status_id, approval):
+    if approval == "agree":
+        status = DebateStatus.objects.get(id=status_id)
+        status.agree += 1
+        status.opinion_total += 1
+        status.save()
+        print("agree added")
+        return HttpResponseRedirect('/')
+    elif approval == "disagree":
+        status = DebateStatus.objects.get(id=status_id)
+        status.disagree += 1
+        status.opinion_total += 1
+        status.save()
+        print("disagree added")
+        return HttpResponseRedirect('/')
+    else:
+        return HttpResponseRedirect('accounts/profile')
