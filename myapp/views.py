@@ -4,6 +4,7 @@ from myapp.models import Playersinfo, Debate, DebateStatus
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 import datetime
+from datetime import datetime
 import re
 import requests
 from bs4 import BeautifulSoup
@@ -38,12 +39,22 @@ def dailygames(m,d,y):
 def home(request):
     if request.user.is_authenticated:
         user_id = request.user.id
-        all_status = DebateStatus.objects.all().exclude(id=user_id)
-        all_debates = Debate.objects.all().exclude(id=user_id)
+        agree_percents = []
+        #displaying statuses and debate charts not including the current_user
+        all_status = DebateStatus.objects.exclude(user_id=user_id)
+        all_debates = Debate.objects.all().exclude(user_id=user_id)
+        for s in all_status:
+            if s.opinion_total != 0:
+                agree_percents.append(round(100*(s.agree/s.opinion_total)))
+            else:
+                agree_percents.append(0)
+
     else:
         all_status = DebateStatus.objects.all()
         all_debates = Debate.objects.all()
-    return render(request, 'home.html', {"all_status": all_status, "all_debates":all_debates})
+        agree_percents =[]
+
+    return render(request, 'home.html', {"all_status": all_status, "all_debates":all_debates, "agree_percents": agree_percents})
 
 def index(request, letter):
     alphabet =[]
@@ -205,9 +216,15 @@ def comparisons(request, playerone_name, playertwo_name):
     p1_accolades = playerAccolades(playerone_name)
     p2_accolades = playerAccolades(playertwo_name)
     form = PlayerForm()
-    # PlayerRequestForm(request)
 
-    return render(request, 'comparisons.html', {'player':player, 'playertwo': player_two, 'p1_current': p1_current, 'p2_current': p2_current, 'p1_careerstats': p1_careerstats, 'p2_careerstats': p2_careerstats, 'p1_accolades': p1_accolades, 'p2_accolades': p2_accolades, 'form': form})
+    years = []
+    current_year = datetime.today().year
+
+    for year in range(2000,int(current_year)+1):
+        years.append(year)
+    print(years)
+
+    return render(request, 'comparisons.html', {'player':player, 'playertwo': player_two, 'p1_current': p1_current, 'p2_current': p2_current, 'p1_careerstats': p1_careerstats, 'p2_careerstats': p2_careerstats, 'p1_accolades': p1_accolades, 'p2_accolades': p2_accolades, 'years':years, 'form': form})
 
 
 def createDebate(request):
@@ -263,6 +280,7 @@ def submitStatus(request):
         ds.save()
         return HttpResponseRedirect('accounts/profile')
 
+
 def statusCount(request, status_id, approval):
     if approval == "agree":
         status = DebateStatus.objects.get(id=status_id)
@@ -280,3 +298,8 @@ def statusCount(request, status_id, approval):
         return HttpResponseRedirect('/')
     else:
         return HttpResponseRedirect('accounts/profile')
+
+
+def yearlyStats(request, playername, year):
+    print(playername, year)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

@@ -88,6 +88,28 @@
   </div>
 </div>
 
+<div class="years_stats">
+  <div class="p1_years">
+    <button onclick="yearlyStats(this,0)" class="dropbtn">Stats By Year</button>
+    <ul class="dropdown-years hidden">
+      {%for year in years%}
+      <a><li>{{year}}</li></a>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="p2_years">
+    <button onclick="yearlyStats(this,1)" class="dropbtn">Stats By Year</button>
+    <ul class="dropdown-years hidden">
+      {%for year in years%}
+      <li>{{year}}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+
+
 <form class="debateform" action="/createDebate" method="post">
   {% csrf_token %}
   <input type="hidden" name="p1_id" value="{{player.id}}">
@@ -107,6 +129,8 @@
   <input type="submit" name="vote" value="Vote">
 
 </form>
+
+
 
 
 {% endblock %}

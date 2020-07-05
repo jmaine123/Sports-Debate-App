@@ -20,3 +20,15 @@ function Switch(obj, index){
     console.log(d[index]);
   }
 }
+
+
+
+function yearlyStats(obj, index){
+  p1_year = document.getElementsByClassName('dropdown-years')
+  el = obj.getAttribute('class')
+  if (el == 'dropbtn'){
+    p1_year[index].classList.toggle("hidden");
+  }
+  console.log(p1_year)
+
+}

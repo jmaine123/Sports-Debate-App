@@ -12,5 +12,6 @@ urlpatterns = [
     path('createDebate', views.createDebate, name='createDebate'),
     path('deleteDebate', views.deleteDebate, name='deleteDebate'),
     path('submitStatus', views.submitStatus, name='submitStatus'),
-    path('statusCount/<int:status_id>&<str:approval>', views.statusCount, name='statusCount'),    
+    path('statusCount/<int:status_id>&<str:approval>', views.statusCount, name='statusCount'),
+    # path('yearlyStats/<str:playername>&season=<int:year>', views.yearlyStats, name='yearlyStats'),  
 ]
