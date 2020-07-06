@@ -300,6 +300,7 @@ def statusCount(request, status_id, approval):
         return HttpResponseRedirect('accounts/profile')
 
 
-def yearlyStats(request, playername, year):
+def advanceStats(request, playername, year):
+
     print(playername, year)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return render(request, 'advanceStats.html')

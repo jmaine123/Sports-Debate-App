@@ -93,18 +93,32 @@
     <button onclick="yearlyStats(this,0)" class="dropbtn">Stats By Year</button>
     <ul class="dropdown-years hidden">
       {%for year in years%}
-      <a><li>{{year}}</li></a>
+      <a onclick= 'advanceStats("{{player.name}}",{{year}}, 0)'><li>{{year}}</li></a>
+      <!-- <a href="/advanceStats/{{player.name}}&season={{year}}"><li>{{year}}</li></a> -->
       {% endfor %}
     </ul>
+    <ol class="p-advance">
+      <li class="p1-pts"></li>
+      <li class="p1-reb"></li>
+      <li class="p1-ast"></li>
+      <li class="p1-stl"></li>
+    </ol>
   </div>
 
   <div class="p2_years">
     <button onclick="yearlyStats(this,1)" class="dropbtn">Stats By Year</button>
     <ul class="dropdown-years hidden">
       {%for year in years%}
-      <li>{{year}}</li>
+      <a onclick= 'advanceStats("{{playertwo.name}}",{{year}}, 1)'><li>{{year}}</li></a>
+      <!-- <a href="/advanceStats/{{player.name}}&season={{year}}"><li>{{year}}</li></a> -->
       {% endfor %}
     </ul>
+    <ol class="p-advance">
+      <li class="p1-pts"></li>
+      <li class="p1-reb"></li>
+      <li class="p1-ast"></li>
+      <li class="p1-stl"></li>
+    </ol>
   </div>
 </div>
 

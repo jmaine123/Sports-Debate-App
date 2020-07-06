@@ -571,3 +571,18 @@ ul{
 .dropdown-years li:hover{
   background-color: black;
 }
+
+.p-advance{
+  width: 40%;
+  margin:auto;
+
+}
+
+.p-advance li{
+  background-color: rgb(52, 54, 213, .8);
+  color: white;
+  width: 50%;
+  margin: 2% auto;
+  text-align: center;
+  border-radius: 20px;
+}
