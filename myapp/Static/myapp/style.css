@@ -544,9 +544,10 @@ ul{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 0%;
-  width: 90%;
+  width: 100%;
   margin: 5% auto;
   text-align: center;
+  font-size: 2.5vh;
 }
 
 .show{
@@ -559,6 +560,7 @@ ul{
   text-align: center;
   overflow: scroll;
   height: 20%;
+  margin-top: 0%;
 }
 
 .dropdown-years li{
@@ -575,7 +577,7 @@ ul{
 .p-advance{
   width: 40%;
   margin:auto;
-
+  list-style: none;
 }
 
 .p-advance li{
@@ -585,4 +587,63 @@ ul{
   margin: 2% auto;
   text-align: center;
   border-radius: 20px;
+}
+
+.mypopup{
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  padding-top: 100px;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Pop up animations */
+
+.close {
+  color: white;
+  float: right;
+  font-size: 38px;
+  margin-right: 5%;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: rgb(125, 205, 210);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.popup_error{
+  margin: auto;
+  position: relative;
+  border: 3px solid white;
+  border-radius: 10px;
+  border-style:groove;
+  padding: 0;
+  width: 80%;
+  font-size: 20px;
+  background-color:rgba(241, 13, 54, 0.77);
+  color:white;
+  text-align:center;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
 }

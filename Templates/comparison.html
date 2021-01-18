@@ -9,4 +9,15 @@
     <input type="submit" value="Submit">
 </form>
 
+{% if error %}
+  <div id="popup_container" class="mypopup">
+    <div class="popup_error">
+      <span class="close">&times;</span>
+      <div class="error_content">
+        <strong><p>{{error}}</p></strong>
+      </div>
+    </div>
+  </div>
+{%endif %}
+
 {% endblock %}

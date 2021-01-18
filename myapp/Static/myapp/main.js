@@ -25,8 +25,8 @@ function Switch(obj, index){
 
 
 function yearlyStats(obj, index){
-  p1_year = document.getElementsByClassName('dropdown-years')
-  el = obj.getAttribute('class')
+  p1_year = document.getElementsByClassName('dropdown-years');
+  el = obj.getAttribute('class');
   if (el == 'dropbtn'){
     p1_year[index].classList.toggle("hidden");
   }
@@ -55,10 +55,16 @@ function advancePlayerId(name){
   return id
 }
 
-
+function yearSelect(index, year){
+  el = document.getElementsByClassName('dropbtn');
+  lis = document.getElementsByClassName('dropdown-years')
+  el[index].innerHTML = year;
+  lis[index].classList.add("hidden");
+}
 
 function advanceStats(name, year, index){
   var id = advancePlayerId(name);
+  yearSelect(index, year);
   var request = new XMLHttpRequest();
 
   // Open a new connection, using the GET request on the URL endpoint
@@ -94,8 +100,16 @@ function advanceStats(name, year, index){
   request.send();
 }
 
-// console.log(test_id)
-// advanceStats(test_id, 2014);
+//comparison.html
+
+var popup_container = document.getElementById("popup_container");
+
+// Get the <span> element that closes the modal
+var close_popup = document.getElementsByClassName("close")[0];
+// When the user clicks on <span> (x), close the modal
+close_popup.onclick = function() {
+  popup_container.style.display = "none";
+}
 
 
 

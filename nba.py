@@ -116,7 +116,7 @@ def boxscore_entry():
 
 def data_entry():
     for player in players:
-        c.execute("INSERT INTO playersInfo(ID, Player_id, Name, Position, Height, Birthdate, College, Url) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?) ",
+        c.execute("REPLACE INTO playersInfo(ID, Player_id, Name, Position, Height, Birthdate, College, Url) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?) ",
             (player['Player_id'], player['Name'], player['Position'], player['Height'], player['Birth Date'], player['College'], player['Url']))
         conn.commit()
 
