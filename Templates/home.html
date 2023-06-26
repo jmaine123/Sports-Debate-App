@@ -60,7 +60,7 @@
     <form class="debate_card" action="/player_vote" method="post">
       <div class="">
         <h1>{{debate.p1_name}}</h1>
-        <img src="https://d2cwpp38twqe55.cloudfront.net/req/201912101/images/players/{{debate.p1_user_id}}.jpg">
+        <img src="https://www.basketball-reference.com/req/201912101/images/players/{{debate.p1_user_id}}.jpg">
         <h2>Votes: {{debate.p1_vote}}</h2>
         {% if user.is_authenticated %}
           <input type="button" name="player_vote" value="Player 1">
@@ -68,7 +68,7 @@
       </div>
       <div class="">
         <h1>{{debate.p2_name}}</h1>
-        <img src="https://d2cwpp38twqe55.cloudfront.net/req/201912101/images/players/{{debate.p2_user_id}}.jpg">
+        <img src="https://www.basketball-reference.com/req/201912101/images/players/{{debate.p2_user_id}}.jpg">
         <h2>Votes: {{debate.p2_vote}}</h2>
         {% if user.is_authenticated%}
           <input type="button" name="player_vote" value="Player two">
