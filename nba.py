@@ -13,11 +13,13 @@ def scrapePlayers():
         # print (chr(i))
 
         URL = 'https://www.basketball-reference.com/players/%s/'%(chr(i))
+        # URL = "https://www.basketball-reference.com/players/a"
         r = requests.get(URL)
 
         soup = BeautifulSoup(r.content, 'html.parser')
 
         table = soup.find('tbody')
+        print(i)
 
         for row in table.findAll('tr'):
             player = {}

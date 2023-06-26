@@ -312,17 +312,47 @@ tbody {
 
 
 .player_form{
-  border: 3px solid purple;
+  border: 5px solid purple;
   font-size: 2vh;
   height: auto;
-  margin:auto;
+  margin:50% 10%;
   background: rgb(94, 19, 129);
   color:white;
+  padding: 10%;
+  /* display: grid; */
+  /* grid-template-columns: repeat(12, 1fr); */
 }
 
 .player_form input{
-  background: white !important;
+    background: white !important;
+    font-size: 2vh;
+    width: 20vh;
+    margin: 5% 0;
+    border-radius: 7%;
+    background-color: red;
+    opacity: 0.8;
+    color: black;
+    text-align: center;
+    
 }
+
+.player_form label, input{
+    margin: 5% 5%;
+    /* display: block; */
+
+}
+
+.player_form .submit{
+    width:30%;
+    margin-bottom: 5%;
+    font-size: 1.5vh;
+}
+
+.player_form .submit:hover{
+    background-color: red;
+    color: purple;
+}
+
 
 ul{
   list-style: none;
@@ -358,14 +388,7 @@ ul{
   font-size: 2vh;
 }
 
-.player_form input{
-  width: 20vh;
-  margin: auto;
-  border-radius: 7%;
-  background-color: red;
-  opacity: 0.5;
-  color: black;
-}
+
 
 .submit{
   width: 5vh;
@@ -483,8 +506,8 @@ ul{
 
 }
 
-.debate_table{
-}
+/* .debate_table{
+} */
 
 .debate_chart{
   background: linear-gradient(-100deg, rgb(27, 18, 129), rgba(99, 14, 125, 0.88));

@@ -7,19 +7,21 @@
 
 <div class="player_comparisons">
   <div class="player_pic">
-    <img src="https://d2cwpp38twqe55.cloudfront.net/req/201912101/images/players/{{player.player_id}}.jpg">
+    <img src="https://www.basketball-reference.com/req/201912101/images/players/{{player.player_id}}.jpg">
     <h2>{{player.id}}</h2>
     <h1 class="name"><a href="/players/{{player.id}}">{{player.name}}</a></h1>
     <h3>{{player.height}}</h3>
   </div>
-  <form class = "player_form" action="/comparison" method="post">
-    {% csrf_token %}
-    {{ form| linebreaks}}
-    <br>
-    <input class="submit" type="submit" value="Submit">
-  </form>
+  <div>    
+    <form class = "player_form" action="/comparison" method="post">
+        {% csrf_token %}
+        {{form}}
+        <br>
+        <input class="submit" type="submit" value="Submit">
+    </form>
+  </div>
   <div class="player_pic">
-    <img src="https://d2cwpp38twqe55.cloudfront.net/req/201912101/images/players/{{playertwo.player_id}}.jpg">
+    <img src="https://www.basketball-reference.com/req/201912101/images/players/{{playertwo.player_id}}.jpg">
     <h2>{{playertwo.id}}</h2>
     <h1 class="name"><a href="/players/{{playertwo.id}}">{{playertwo.name}}</a></h1>
     <h3>{{playertwo.height}}</h3>

@@ -131,6 +131,8 @@ def validatescrape(elm):
 
 def currentSeasonStats(player):
     player = get_object_or_404(Playersinfo, name = player)
+    print("Hey Player obj is here")
+    print(player.url)
     p_url = 'https://www.basketball-reference.com' + player.url
     page = requests.get(p_url)
     tree = html.fromstring(page.content)
@@ -139,6 +141,8 @@ def currentSeasonStats(player):
     # current_year = int(datetime.now().year)
     age = 2021 - int(birth_year.group(0))
 
+    print(tree)
+
     player_obj = {}
     if age < 41:
         salary = tree.xpath('//div[contains(@id, "all_contracts")]/comment()[1]')
@@ -146,18 +150,20 @@ def currentSeasonStats(player):
         # current_salary = scrapeComment('//div[contains(@id, "all_contracts")]/comment()[1]', '(?<=\<span class=\"salary\-pl\">\$)[\d.,]+', tree)
 
         player_obj = {
-            "Points": tree.xpath('//h4[@data-tip="Points"]/parent::div/p[1]/text()')[0],
-            "Rebounds": tree.xpath('//h4[text()="TRB"]/../p[1]/text()')[0],
-            "Assists": tree.xpath('//h4[text()="AST"]/../p[1]/text()')[0],
+            # "Points": tree.xpath('//h4[@data-tip="Points"]/parent::div/p[1]/text()')[0],
+            "Points": tree.xpath('//span[@data-tip="Points"]/parent::div/p[1]/text()')[0],
+            "Rebounds": tree.xpath('//strong[text()="TRB"]/ancestor::div/p[1]/text()')[0],
+            "Assists": tree.xpath('//strong[text()="AST"]/ancestor::div/p[1]/text()')[0],
             "Block": tree.xpath('//tr[@id="per_game.2021"]/td[@data-stat="blk_per_g"]/text()')[0],
             "Steals": tree.xpath('//tr[@id="per_game.2021"]/td[@data-stat="stl_per_g"]/text()')[0],
-            "Field Goal": tree.xpath('//h4[text()="FG%"]/../p[1]/text()')[0],
-            "3pt Field Goal": tree.xpath('//h4[text()="FG3%"]/../p[1]/text()')[0],
-            "Free Throw": tree.xpath('//h4[text()="FT%"]/../p[1]/text()')[0],
+            "Field Goal": tree.xpath('//strong[text()="FG%"]/ancestor::div/p[1]/text()')[0],
+            "3pt Field Goal": tree.xpath('//strong[text()="FG3%"]/ancestor::div/p[1]/text()')[0],
+            "Free Throw": tree.xpath('//strong[text()="FT%"]/ancestor::div/p[1]/text()')[0],
             # "Current Salary": "$" + current_salary[0],
         }
         print("this");
         print(salary);
+    print(player_obj);
     return player_obj
 
 
@@ -166,19 +172,20 @@ def careerStats(player):
     p_url = 'https://www.basketball-reference.com' + player.url
     page = requests.get(p_url)
     tree = html.fromstring(page.content)
+    print(tree)
     # career_salary = scrapeComment('//div[contains(@id, "all_all_salaries")]/comment()[1]', '(?<=\" data-stat=\"salary\" >\$)[\d,.]+',tree)
     exp_str = tree.xpath('//strong[contains(text(),"Experience:")]/../text()')
 
     player_career ={
-        "Points": tree.xpath('//h4[@data-tip="Points"]/parent::div/p[2]/text()')[0],
-        "Rebounds": tree.xpath('//h4[text()="TRB"]/../p[2]/text()')[0],
-        "Assists": tree.xpath('//h4[text()="AST"]/../p[2]/text()')[0],
-        "Block": tree.xpath('//tfoot/tr[@data-row="17"]/td[@data-stat="blk_per_g"]/text()'),
-        "Steals": tree.xpath('//tfoot/tr[@data-row="17"]/td[@data-stat="stl_per_g"]/text()'),
-        "Field Goal": tree.xpath('//h4[text()="FG%"]/../p[2]/text()')[0],
-        "3pt field goal": tree.xpath('//h4[text()="FG3%"]/../p[2]/text()')[0],
-        "Free Throw": tree.xpath('//h4[text()="FT%"]/../p[2]/text()')[0],
-        "Nicknames": tree.xpath('//div[@itemtype="https://schema.org/Person"]/p[2]/text()')[0],
+        "Points": tree.xpath('//span[@data-tip="Points"]/parent::div/p[2]/text()')[0],
+        "Rebounds": tree.xpath('//strong[text()="TRB"]/ancestor::div/p[2]/text()')[0],
+        "Assists": tree.xpath('//strong[text()="AST"]/ancestor::div/p[2]/text()')[0],
+        "Block": tree.xpath('//tr[@id="per_game.2021"]/td[@data-stat="blk_per_g"]/text()')[0],
+        "Steals": tree.xpath('//tr[@id="per_game.2021"]/td[@data-stat="stl_per_g"]/text()')[0],
+        "Field Goal": tree.xpath('//strong[text()="FG%"]/ancestor::div/p[2]/text()')[0],
+        "3pt Field Goal": tree.xpath('//strong[text()="FG3%"]/ancestor::div/p[2]/text()')[0],
+        "Free Throw": tree.xpath('//strong[text()="FT%"]/ancestor::div/p[2]/text()')[0],
+        # "Nicknames": tree.xpath('//div[@itemtype="https://schema.org/Person"]/p[2]/text()')[0],
         # "Career Salary": "$" + career_salary[0],
         "Experience": validatescrape(exp_str)
     }
@@ -228,8 +235,8 @@ def comparison(request):
 
 
 def comparisons(request, playerone_name, playertwo_name):
-    # print(playerone_name)
-    # print(playertwo_name)
+    print(playerone_name)
+    print(playertwo_name)
 
     #getting player objects and returning a 404 error page
     # player = get_object_or_404(Playersinfo, name = playerone_name)
@@ -241,11 +248,20 @@ def comparisons(request, playerone_name, playertwo_name):
     except Playersinfo.DoesNotExist:
         return HttpResponseRedirect('/comparison')
         raise Http404("Player does not exist")
-
-    p1_current = currentSeasonStats(playerone_name)
-    p2_current = currentSeasonStats(playertwo_name)
-    p1_careerstats = careerStats(playerone_name)
-    p2_careerstats = careerStats(playertwo_name)
+    
+    try:
+        p1_current = currentSeasonStats(playerone_name)
+        p2_current = currentSeasonStats(playertwo_name)
+    except:
+        p1_current = "N/A"
+        p2_current = "N/A"
+    
+    try:
+        p1_careerstats = careerStats(playerone_name)
+        p2_careerstats = careerStats(playertwo_name)
+    except:
+        p1_careerstats = "N/A"
+        p2_careerstats = "N/A"
     p1_accolades = playerAccolades(playerone_name)
     p2_accolades = playerAccolades(playertwo_name)
     form = PlayerForm()
